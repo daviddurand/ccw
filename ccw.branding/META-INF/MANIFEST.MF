@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+Automatic-Module-Name: ccw.branding
 Bundle-Name: Counterclockwise Plugin
 Bundle-SymbolicName: ccw.branding;singleton:=true
-Bundle-Version: 0.35.1.STABLE001
+Bundle-Version: 1.0.1
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Counterclockwise
 Require-Bundle: org.eclipse.help,
@@ -10,5 +11,5 @@ Require-Bundle: org.eclipse.help,
  org.eclipse.ui.intro,
  org.eclipse.ui,
  org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ClassPath: .

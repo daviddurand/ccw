@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
         xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <modelVersion>4.0.0</modelVersion>
 
         <groupId>ccw</groupId>
         <artifactId>ccw.parent</artifactId>
-        <version>0.35.1.STABLE001</version>
+        <version>${revision}</version>
         <packaging>pom</packaging>
 
         <modules>
@@ -31,7 +31,8 @@
         </profiles>
 
         <properties>
-                <tycho-version>0.23.1</tycho-version>
+                <revision>1.0.1</revision>
+                <tycho-version>2.7.4</tycho-version>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         </properties>
 
@@ -42,60 +43,63 @@
                 </pluginRepository>
                 <pluginRepository>
                         <id>clojars.org</id>
-                        <url>http://clojars.org/repo</url>
+                        <url>https://clojars.org/repo</url>
                 </pluginRepository>
         </pluginRepositories>
 
         <repositories>
                 <repository>
                         <id>clojars.org</id>
-                        <url>http://clojars.org/repo</url>
+                        <url>https://clojars.org/repo</url>
                 </repository>
                 <repository>
                         <id>swtbot</id>
-                        <url>http://download.eclipse.org/technology/swtbot/releases/2.4.0/</url>
+                        <url>https://download.eclipse.org/technology/swtbot/releases/2.4.0/</url>
                         <layout>p2</layout>
                 </repository>
                 <repository>
                         <id>eclipse-color-theme</id>
-                        <url>http://eclipse-color-theme.github.io/update/</url>
+                        <url>https://eclipse-color-theme.github.io/update/</url>
                         <layout>p2</layout>
                 </repository>
                 <repository>
-                        <id>mars</id>
-                        <url>http://download.eclipse.org/releases/mars</url>
+                        <id>latest</id>
+                        <url>https://download.eclipse.org/releases/latest</url>
                         <layout>p2</layout>
                 </repository>
-                <!--repository>
+                <repository>
                         <id>emf-releases</id>
-                        <url>http://download.eclipse.org/modeling/emf/updates/releases/</url>
+                        <url>https://download.eclipse.org/modeling/emf/updates/releases/</url>
                         <layout>p2</layout>
-                </repository-->
+                </repository>
                 <repository>
                         <id>emp-eclipse-market-place</id>
-                        <url>http://download.eclipse.org/mpc/luna/</url>
+                        <url>https://download.eclipse.org/mpc/luna/</url>
                         <layout>p2</layout>
                 </repository>
                 <repository>
                         <id>egit</id>
-                        <url>http://download.eclipse.org/egit/updates/</url>
+                        <url>https://download.eclipse.org/egit/updates/</url>
                         <layout>p2</layout>
                 </repository>
                 <repository>
                         <id>orbit</id>
-                        <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20130827064939/repository</url>
+                        <url>https://download.eclipse.org/tools/orbit/downloads/drops/R20221123021534/repository</url>
                         <layout>p2</layout>
                 </repository>
                 <!--repository>
                         <id>pluginbox</id>
-                        <url>http://pluginbox.sourceforge.net</url>
+                        <url>https://pluginbox.sourceforge.net</url>
                         <layout>p2</layout>
                 </repository-->
-                <!--repository>
+                <repository>
                         <id>org.eclipse.e4.core.tools</id>
-                        <url>http://download.vogella.com/p2/C-MASTER-e4tools-master/lastSuccessful/archive/build/org.eclipse.e4.core.tools.update/target/repository/</url>
+                        <url>https://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest/</url>
+                        <!--url>https://larp-hamburg.de/p2/C-MASTER-e4tools-master/lastSuccessful/archive/build/org.eclipse.e4.core.tools.update/target/repository/
+                                                <url>https://download.eclipse.org/e4/snapshots/org.eclipse.e4.ui/</url>
+    </url-->
                         <layout>p2</layout>
-                </repository-->
+                </repository>
                 <repository>
                         <id>ansi-econsole</id>
                         <url>http://www.nodeclipse.org/updates</url>
@@ -105,7 +109,31 @@
         </repositories>
 
         <build>
+            <pluginManagement>
+     <plugins>
+       <plugin>
+         <groupId>org.eclipse.tycho</groupId>
+         <artifactId>tycho-p2-director-plugin</artifactId>
+         <version>${tycho-version}</version>
+       </plugin>
+     </plugins>
+   </pluginManagement>
                 <plugins>
+                      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-packaging-plugin</artifactId>
+             <version>${tycho-version}</version>
+             <executions>
+              <execution>
+                <phase>package</phase>
+                <id>package-feature</id>
+                    <configuration>
+                        <finalName>${project.artifactId}_${unqualifiedVersion}.${buildQualifier}</finalName>
+                    </configuration>
+            </execution>
+        </executions>
+    </plugin>
+
                         <!--
                         <plugin>
                                 <groupId>org.eclipse.tycho</groupId>
@@ -166,7 +194,7 @@
                                             <requirement>
                                               <type>eclipse-feature</type>
                                               <id>org.eclipse.rcp</id>
-                                              <versionRange>0.0.0</versionRange>
+                                              <versionRange>1.0.1</versionRange>
                                             </requirement>
                                           </extraRequirements>
                                         </dependency-resolution>

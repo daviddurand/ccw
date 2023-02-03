@@ -30,10 +30,13 @@
                                                          (let [client (.client connection)]
                                                            (repl/response-values (repl/message client {:op :eval :code command})))))
                                                      1000)]
-        (if (every? str/blank? [file line ns])
+        (cond
+          (every? str/blank? [file line ns])
           (do
             (.setStatusLineErrorMessage editor ClojureEditorMessages/Cannot_find_declaration)
             nil)
+          
+          :else
           {"file" file
            "line" (if (str/blank? line) 0 (Integer/valueOf line))
            "ns" ns
@@ -43,8 +46,11 @@
   [[offset length] ^IClojureEditor editor]
   (let [rloc (-> editor .getParseState ed/getParseTree lu/parsed-root-loc)
         l (lu/loc-for-offset rloc offset)]
-    (when-let [{:strs #{ns file line sym}} (and (= :symbol (-> l z/node :tag)) ; TODO transform :strs -> :keys
+    (when-let [{:strs [ns file line sym]} (and (= :symbol (-> l z/node :tag)) ; TODO transform :strs -> :keys
                                              (find-decl (lu/loc-text l) editor))]
-      [{:region [(lu/start-offset l) (-> l z/node :count)]
-        :open #(ccw.ClojureCore/openInEditor ns file line)
-        :text (str "Open declaration for " sym)}])))
+      (let [f [{:region [(lu/start-offset l) (-> l z/node :count)]
+              :open #(ccw.ClojureCore/openInEditor ns file line)
+              :text (str "Open declaration for " sym)}]]
+        ;(ccw.CCWPlugin/log (str "file: "  file))
+        ;(ccw.CCWPlugin/log (str "F: " f))
+        f))))

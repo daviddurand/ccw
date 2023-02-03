@@ -7,13 +7,13 @@
   <parent>
     <groupId>ccw</groupId>
     <artifactId>ccw.parent</artifactId>
-    <version>0.35.1.STABLE001</version>
+    <version>${revision}</version>
     <relativePath>..</relativePath>
   </parent>
 
   <groupId>ccw</groupId>
   <artifactId>ccw.core</artifactId>
-  <version>0.35.1.STABLE001</version>
+  <version>${revision}</version>
   <packaging>eclipse-plugin</packaging>
 
   <properties>
@@ -166,9 +166,9 @@
     <build>
       <plugins>
         <plugin>
-          <groupId>ccw</groupId>
+          <groupId>com.theoryinpractise</groupId>
           <artifactId>clojure-maven-plugin</artifactId>
-          <version>1.3.24-SNAPSHOT</version>
+          <version>1.8.4</version>
           <extensions>true</extensions>
           <configuration>
             <sourceDirectories>
