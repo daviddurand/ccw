@@ -17,7 +17,6 @@ import javax.inject.Named;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateSetStrategy;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.ChangeEvent;
 import org.eclipse.core.databinding.observable.IChangeListener;
@@ -33,12 +32,12 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.jface.databinding.preference.PreferencePageSupport;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.databinding.viewers.ObservableValueEditingSupport;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties; 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.preference.PreferencePage;
@@ -225,7 +224,7 @@ public class HoverPreferencePage extends PreferencePage implements IWorkbenchPre
         // Label/Content providers \\
         // ///////////////////////////
 
-        ObservableListContentProvider contentProvider = new ObservableListContentProvider();
+        ObservableListContentProvider<HoverDescriptor> contentProvider = new ObservableListContentProvider<>();
 
         IObservableMap[] columnsObservables = Properties.observeEach(contentProvider.getKnownElements(),
                 HoverViewModel.hoverDisplayDomain);
@@ -240,7 +239,8 @@ public class HoverPreferencePage extends PreferencePage implements IWorkbenchPre
         // Selected hover logic \\
         //////////////////////////
 
-        final IObservableValue selectedHover = ViewersObservables.observeSingleSelection(fHoverTableViewer);
+        final IObservableValue<HoverDescriptor> selectedHover = ViewerProperties.singleSelection(HoverDescriptor.class)
+                        .observe(fHoverTableViewer);
 
         final IObservableValue isHoverSelected = new ComputedValue(Boolean.TYPE) {
             @Override
@@ -252,7 +252,7 @@ public class HoverPreferencePage extends PreferencePage implements IWorkbenchPre
         context.bindValue(WidgetProperties.enabled().observe(fGrpSummary), isHoverSelected);
         context.bindValue(WidgetProperties.enabled().observe(fSummaryHoverModifierStringText), isHoverSelected);
 
-        final IObservableValue stateMaskOfSelected = HoverViewModel.hoverStateMask.observeDetail(selectedHover);
+        final IObservableValue<Integer> stateMaskOfSelected = HoverViewModel.hoverStateMask.observeDetail(selectedHover);
         final IObservableValue modifierStringOfSelected = HoverViewModel.hoverModifierString
                 .observeDetail(selectedHover);
 
@@ -302,14 +302,14 @@ public class HoverPreferencePage extends PreferencePage implements IWorkbenchPre
 
         // AR - because of some ordering issue problem, I am disabling the automatic
         // update from model to target of the checked hovers and...
-        final UpdateSetStrategy checkedModelToTargetStrategy = new UpdateSetStrategy(UpdateValueStrategy.POLICY_ON_REQUEST);
 
         // AR - ... add an explicit binding that will be needed...
-        final Binding checkedBindSet = context.bindSet(ViewersObservables.observeCheckedElements(fHoverTableViewer, HoverDescriptor.class),
-                fViewModel.checkedSet, null, checkedModelToTargetStrategy);
-        
+//        final Binding checkedBindSet = context.bindSet(ViewersObservables.observeCheckedElements(fHoverTableViewer, HoverDescriptor.class),
+//                                                                     fViewModel.checkedSet, null, checkedModelToTargetStrategy);
+//        final Binding checkedBindSet = context.bindSet(ViewerProperties.singleSelection()., null, checkedModelToTargetStrategy);
+         final Binding checkedBindSet = context.bindSet(fViewModel.checkedSet, fViewModel.checkedSet);
         // AR - ...to manually trigger the update when new elements are added to the provider...
-        IObservableSet realizedElements = contentProvider.getRealizedElements();
+        IObservableSet<HoverDescriptor> realizedElements = contentProvider.getRealizedElements();
         realizedElements.addChangeListener(new IChangeListener() {
             @Override
             public void handleChange(ChangeEvent event) {

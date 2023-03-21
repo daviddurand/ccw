@@ -34,7 +34,7 @@
                                          ContextInjectionFactory]
            org.eclipse.jface.resource.JFaceResources
            org.eclipse.jface.internal.text.html.HTMLPrinter
-           org.eclipse.jface.databinding.swt.SWTObservables
+           org.eclipse.jface.databinding.swt.DisplayRealm
            [org.eclipse.jface.text Region
                                    ITextHover
                                    ITextHoverExtension
@@ -352,7 +352,7 @@
   "Updates the observable-hovers part of the state. Returns new state."
   [old-state descriptors]
   (let [observable-hovers ^ObservableList (:observable-descriptors old-state)
-        realm (SWTObservables/getRealm (swt/display))]
+        realm (DisplayRealm/getRealm (swt/display))]
     (.exec realm #(do (.clear observable-hovers)
                       (.addAll observable-hovers (create-java-descriptor-list descriptors))))
     (assoc old-state :observable-descriptors observable-hovers)))

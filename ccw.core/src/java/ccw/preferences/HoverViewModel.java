@@ -16,7 +16,7 @@ import java.util.Set;
 
 import javax.inject.Singleton;
 
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.databinding.observable.list.IListChangeListener;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -46,15 +46,15 @@ import ccw.util.UiUtils;
 public final class HoverViewModel {
 
     // Observables
-    public final IObservableSet checkedSet;
-    public final IObservableList hoverObservableList;
+    public final IObservableSet<HoverDescriptor> checkedSet;
+    public final IObservableList<HoverDescriptor> hoverObservableList;
 
     // Properties
-    public final static IValueProperty hoverModifierString = BeanProperties.value(HoverDescriptor.class, "modifierString");
-    public final static IValueProperty hoverStateMask = BeanProperties.value(HoverDescriptor.class, "stateMask");
-    public final static IValueProperty hoverLabel = BeanProperties.value(HoverDescriptor.class, "label");
-    public final static IValueProperty hoverEnabled = BeanProperties.value(HoverDescriptor.class, "enabled");
-    public final static IValueProperty hoverDescription = BeanProperties.value(HoverDescriptor.class, "description");
+    public final static IValueProperty<HoverDescriptor, String> hoverModifierString = BeanProperties.value(HoverDescriptor.class, "modifierString", String.class);
+    public final static IValueProperty<HoverDescriptor,  Integer> hoverStateMask = BeanProperties.value(HoverDescriptor.class, "stateMask", Integer.class);
+    public final static IValueProperty<HoverDescriptor, String> hoverLabel = BeanProperties.value(HoverDescriptor.class, "label", String.class);
+    public final static IValueProperty<HoverDescriptor, String> hoverEnabled = BeanProperties.value(HoverDescriptor.class, "enabled", String.class);
+    public final static IValueProperty<HoverDescriptor, String> hoverDescription = BeanProperties.value(HoverDescriptor.class, "description", String.class);
     public final static IValueProperty[] hoverDisplayDomain = new IValueProperty[] { hoverLabel, hoverModifierString, hoverDescription };
 
     // Validators
@@ -65,21 +65,23 @@ public final class HoverViewModel {
 
         hoverObservableList = hoverModel.observableHoverDescriptors();
         hoverObservableList.addListChangeListener(new IListChangeListener() {
+
             @Override
             public void handleListChange(ListChangeEvent event) {
                 updateCheckedSet((List<HoverDescriptor>) event.getObservableList());
+           
             }
         });
         
-        checkedSet = new WritableSet();
+        checkedSet = new WritableSet<HoverDescriptor>();
         updateCheckedSet((List<HoverDescriptor>) hoverObservableList);
         
-        checkedSet.addSetChangeListener(new ISetChangeListener() {
-            private SetDiff fDiff;
+        checkedSet.addSetChangeListener(new ISetChangeListener<HoverDescriptor>() {
+            private SetDiff<HoverDescriptor> fDiff;
 
             @Override
-            public void handleSetChange(SetChangeEvent event) {
-                fDiff = event.diff;
+            public void handleSetChange(SetChangeEvent<? extends HoverDescriptor> event) {
+                fDiff = (SetDiff<HoverDescriptor>) event.diff;
 
                 for (HoverDescriptor hd : (Set<HoverDescriptor>) fDiff.getAdditions()) {
                     hd.setEnabled(true);
@@ -89,12 +91,13 @@ public final class HoverViewModel {
                     hd.setEnabled(false);
                 }
             }
+
         });
 
         stateMaskValidator = new StateMaskValidator();
     }
 
-    private void updateCheckedSet(List<HoverDescriptor> descriptors) {
+    void updateCheckedSet(List<HoverDescriptor> descriptors) {
         checkedSet.clear();
         
         for (HoverDescriptor hd : descriptors) {
