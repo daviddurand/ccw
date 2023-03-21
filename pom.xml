@@ -32,7 +32,7 @@
 
         <properties>
                 <revision>1.0.1</revision>
-                <tycho-version>2.7.4</tycho-version>
+                <tycho-version>2.7.5</tycho-version>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         </properties>
 
@@ -63,8 +63,8 @@
                         <layout>p2</layout>
                 </repository>
                 <repository>
-                        <id>2019-09</id>
-                        <url>https://download.eclipse.org/releases/2019-09/</url>
+                        <id>eclipse-latest</id>
+                        <url>https://download.eclipse.org/releases/latest/</url>
                         <layout>p2</layout>
                 </repository>
                 <repository>
