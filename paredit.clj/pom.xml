@@ -48,9 +48,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>ccw</groupId>
-      <artifactId>clojure-ccw</artifactId>
-      <version>1.7.0</version>
+      <groupId>org.clojure</groupId>
+      <artifactId>clojure</artifactId>
+      <version>1.12.4</version>
       <scope>test</scope>
     </dependency>
     <dependency>

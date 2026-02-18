@@ -47,9 +47,9 @@
             </exclusions>
           </dependency>
         <dependency>
-            <groupId>ccw</groupId>
-            <artifactId>clojure-ccw</artifactId>
-            <version>1.7.0</version>
+            <groupId>org.clojure</groupId>
+            <artifactId>clojure</artifactId>
+            <version>1.12.4</version>
         </dependency>
         <dependency>
             <groupId>org.clojure</groupId>
@@ -213,7 +213,7 @@
                 <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
                 <excludeGroupIds>p2.eclipse-plugin</excludeGroupIds>
                 <excludeScope>system</excludeScope>
-                <excludeArtifactIds>org.eclipse.e4.rcp-jar,org.eclipse.emf.common-jar,org.eclipse.emf.ecore-jar,org.eclipse.rcp-jar,clojure,paredit.clj,ccw.feature,ccw.branding,ccw.core</excludeArtifactIds>
+                <excludeArtifactIds>org.eclipse.e4.rcp-jar,org.eclipse.emf.common-jar,org.eclipse.emf.ecore-jar,org.eclipse.rcp-jar,paredit.clj,ccw.feature,ccw.branding,ccw.core</excludeArtifactIds>
               </configuration>
             </execution>
          </executions>

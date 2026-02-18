@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Automatic-Module-Name: ccw.core
 Bundle-Name: Counterclockwise Clojure Plug-in
 Bundle-SymbolicName: ccw.core;singleton:=true
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2
 Bundle-Localization: plugin
 Bundle-Activator: ccw.CCWPlugin
 Require-Bundle: org.eclipse.core.runtime,
@@ -72,7 +72,7 @@ Bundle-ClassPath: .,
  lib/clj-stacktrace-jar/,
  lib/clj-tuple-jar/,
  lib/cljunit-jar/,
- lib/clojure-ccw-jar/,
+ lib/clojure-jar/,
  lib/clojure-complete-jar/,
  lib/clojure-contrib-jar/,
  lib/commons-codec-jar/,

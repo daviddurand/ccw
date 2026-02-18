@@ -2,7 +2,7 @@
 <feature
       id="ccw.feature"
       label="%featureName"
-      version="1.0.1"
+      version="1.0.2"
       provider-name="%providerName"
       plugin="ccw.branding">
 
@@ -60,7 +60,7 @@
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
       <import plugin="org.eclipse.ui.workbench.texteditor"/>
-      <import feature="org.eclipse.rcp" version="4.13.0.v20190916-1045"/>
+      <import feature="org.eclipse.rcp" version="4.38.0" match="greaterOrEqual"/>
       <import plugin="javax.inject" version="1.0.0" match="greaterOrEqual"/>
    </requires>
 

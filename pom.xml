@@ -31,8 +31,8 @@
         </profiles>
 
         <properties>
-                <revision>1.0.1</revision>
-                <tycho-version>2.7.5</tycho-version>
+                <revision>1.0.2</revision>
+                <tycho-version>4.0.12</tycho-version>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         </properties>
 
@@ -63,8 +63,8 @@
                         <layout>p2</layout>
                 </repository>
                 <repository>
-                        <id>eclipse-latest</id>
-                        <url>https://download.eclipse.org/releases/latest/</url>
+                        <id>eclipse-2025-12</id>
+                        <url>https://download.eclipse.org/releases/2025-12</url>
                         <layout>p2</layout>
                 </repository>
                 <repository>
@@ -74,7 +74,7 @@
                 </repository>
                 <repository>
                         <id>emp-eclipse-market-place</id>
-                        <url>https://download.eclipse.org/mpc/2019-03/</url>
+                        <url>https://download.eclipse.org/mpc/latest/</url>
                         <layout>p2</layout>
                 </repository>
                 <repository>
@@ -84,7 +84,7 @@
                 </repository>
                 <repository>
                         <id>orbit</id>
-                        <url>https://download.eclipse.org/tools/orbit/downloads/drops/R20190827152740/repository</url>
+                        <url>https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/latest</url>
                         <layout>p2</layout>
                 </repository>
                 <!--repository>
